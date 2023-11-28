@@ -1,0 +1,32 @@
+body{
+    background-color: rgba(255, 255, 255, 0.781);
+    color: black;
+}
+/* Estilos para la etiqueta <nav> */
+nav {
+    background-color: #86d3f7; 
+    color: #fff; 
+    padding: 10px; 
+    text-align: center; 
+    box-shadow: 0 2px 5px black; 
+    border-radius: 10px;
+
+  }
+  
+  /* Estilos para los enlaces dentro del <nav> */
+  nav a {
+    text-decoration: none; 
+    color: #fff; 
+    margin: 0 10px; 
+  }
+  
+  /* Estilos para los enlaces cuando se desplazan sobre ellos */
+  nav a:hover {
+    color:red; 
+  }
+  
+  /* Estilos para los enlaces activos  */
+  nav a.active {
+    font-weight: bold; 
+  }
+  
