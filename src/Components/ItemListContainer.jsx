@@ -1,46 +1,44 @@
-import { Typography } from "@mui/material";
-import Container from "react-bootstrap/Container";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ItemList } from "./ItemList";
-import { products } from "../data/products";
+import { useState, useEffect } from 'react';
+import { ItemList } from './ItemList';
+import { useParams } from 'react-router-dom';
+import { getFirestore, getDocs, collection, query, where } from 'firebase/firestore';
 
 
-export const ItemListcontainer = () => {
-  const [items, setItems] = useState([]);
+
+export const ItemListContainer = () => {
+
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
+  const { categoryId } = useParams();
+  
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-       
-        const response = await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(products);
-          }, 2000);
-        });
 
-        if (id) {
-          const filtered = response.filter((item) => item.category === id);
-          setItems(filtered);
-        } else {
-          setItems(response);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+    const db = getFirestore();
+
+    const consult = query(
+      collection(db, "items"),
+      where("categoryId", "==", `${categoryId}`)
+    );
+
+    const refCollection = categoryId ? consult : collection(db, "items");
+
+
+    getDocs(refCollection).then((snapshot) => {
+      if(snapshot.size == 0) {
+        console.log("no results");
+      } else {
+        setProducts(
+          snapshot.docs.map((doc) => {
+            return {id: doc.id, ...doc.data()};
+          })
+        );
       }
-    };
+    })
+      .finally(() => setLoading(false));
 
-    fetchData();
-  }, [id]);
+  }, [categoryId]);
 
-  return (
-    <Container className="mt-4">
-      <Typography variant="h1">Motos nuevas</Typography>
-      <ItemList items={items} />
-    </Container>
-  )
-};
+  return  <ItemList products={products} loading={loading} /> 
+  
+}

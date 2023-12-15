@@ -1,15 +1,22 @@
-import React from 'react';  
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Badge from '@mui/material/Badge';
+import React from 'react';
+import { useContext } from 'react';
+import { Badge } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const CartWidget = () => {
-  const cartItemCount = 5; 
 
-  return (
-    <Badge badgeContent={cartItemCount} color="error">
-      <ShoppingCartIcon />
-    </Badge>
-  );
-};
+import { CartContext } from '../contexts/CartContext';
 
-export default CartWidget;
+export const CartWidget = () => {
+  const {items} = useContext(CartContext) ;
+
+  const total = items.reduce((acumulador, actual) => acumulador + actual.quantity, 0);
+
+  return(
+    <div className='d-flex align-items-center container'>
+      <Link to={"/cart"}>
+        <i className="bi bi-cart2"></i>
+      </Link>
+      <Badge bg="secondary">{total}</Badge>
+    </div>
+  )
+}
