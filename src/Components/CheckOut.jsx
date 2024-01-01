@@ -2,9 +2,7 @@ import { Button } from "react-bootstrap";
 import { useContext, useState } from "react";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import moment from "moment";
-
 import { CartContext } from "../contexts/CartContext";
-
 
 const clearBuyer = {name: "", phone: "", email: ""};
 
@@ -79,7 +77,7 @@ export const CheckOut = () => {
         </div>
 
         <div className="button-container">
-          <Button type="submit" className="submit" variant="dark" >Enviar</Button>
+          <Button onClick={handleSendOrder} variant="dark" >Enviar</Button>
         </div>
       </form>
     </div>

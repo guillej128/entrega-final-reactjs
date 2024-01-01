@@ -19,7 +19,9 @@ export const ItemsCart = () => {
         <div key={item.id} className="item-buyer">
           
           <div className="image-container">
-            <img src={item.image} alt={item.title} className="image"/>
+            <img src={item.image} alt={item.title} className="image"
+            style={{ maxWidth: "30%", height: "auto" }}
+            />
           </div>
 
           <div className="data-container">

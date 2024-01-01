@@ -1,15 +1,12 @@
-import { useState, useEffect } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
-
-import {CartWidget} from './CartWidget';
-
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import { CartWidget } from './CartWidget';
 
 export const NavBar = () => {
-
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const db = getFirestore();
@@ -17,13 +14,12 @@ export const NavBar = () => {
 
     getDocs(data).then((snapshot) => {
       const items = snapshot.docs.map(doc => doc.data());
-      setCategories(items.map(i => i.categoryId));
+      setCategories(items.map(i => i.category));
     })
-  
-  },[])
-  
+  }, [])
+
   const uniqueCategories = new Set(categories);
-  
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-body-tertiary" id='navbar-order' data-bs-theme="dark">
@@ -32,26 +28,33 @@ export const NavBar = () => {
             <Navbar.Brand className="commerce-name">Moto Mania</Navbar.Brand>
           </NavLink>
 
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
-          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-          aria-expanded="false" aria-label="Toggle navigation">
-            
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <Nav className="me-auto">
               {[...uniqueCategories].map(category => (
                 <Nav.Link as={NavLink} key={category} to={`/category/${category}`}>
-                    <span className='Nav-Link nav-item'>{category}</span>
+                  <span className='Nav-Link nav-item'>{category}</span>
                 </Nav.Link>
               ))}
             </Nav>
             <Nav>
-              <CartWidget />
+              <NavLink to="/Cart" className="nav-link">
+                <CartWidget />
+              </NavLink>
             </Nav>
           </div>
         </div>
       </nav>
     </header>
   )
-}
+};

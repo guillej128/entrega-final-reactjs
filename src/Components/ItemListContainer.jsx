@@ -9,7 +9,7 @@ export const ItemListContainer = () => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { categoryId } = useParams();
+  const { category } = useParams();
   
 
   useEffect(() => {
@@ -18,10 +18,10 @@ export const ItemListContainer = () => {
 
     const consult = query(
       collection(db, "items"),
-      where("categoryId", "==", `${categoryId}`)
+      where("category", "==", `${category}`)
     );
 
-    const refCollection = categoryId ? consult : collection(db, "items");
+    const refCollection = category ? consult : collection(db, "items");
 
 
     getDocs(refCollection).then((snapshot) => {
@@ -37,7 +37,7 @@ export const ItemListContainer = () => {
     })
       .finally(() => setLoading(false));
 
-  }, [categoryId]);
+  }, [category]);
 
   return  <ItemList products={products} loading={loading} /> 
   

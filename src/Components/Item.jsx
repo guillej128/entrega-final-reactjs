@@ -14,10 +14,12 @@ export const Item = ({ product }) => {
       <Card.Body>
         <Card.Title>{product.title}</Card.Title>
         <CardFooter id="button-container">
-          <Link to={`/products/${product.id}`}>
+          <p className="description">{product.description}</p>
+          <p className="price">$
+           {product.price}</p>
+           <Link to={`/products/${product.id}`}>
             <Button variant="dark">Ver</Button>
           </Link>
-          <p className="price">$ {product.price}</p>
         </CardFooter>
       </Card.Body>
     </Card>

@@ -9,7 +9,7 @@ export const Error404 = () => {
       <Card.Title style={{fontSize: "80px", color: "white"}}>Ooops!</Card.Title>
       <Card.Text style={{fontSize: "32px", color: "white"}}>Página no encontrada</Card.Text>
       <Link to={'/'}>
-        <Button variant="dark" style={{fontSize: "90%"}}>HOME</Button>
+        <Button variant="dark" style={{fontSize: "90%"}}>Volver al Inicio</Button>
       </Link>
     </Container>
   )

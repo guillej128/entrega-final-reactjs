@@ -22,7 +22,9 @@ export const ItemDetail = ({ product }) => {
       
     <Card id="container-detail">
       <div id="image-container">
-        <Card.Img src={product.image} className="image"/>
+        <Card.Img src={product.image} className="image"
+        style={{ maxWidth: "50%", height: "auto" }}
+        />
       </div>
       <div className="description-price">
         <div className="container-description">
